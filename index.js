@@ -30,24 +30,48 @@ server.get('/usuarios/:index', (req, res) =>{
 });
 */
 
+//MIDDLEWARE
+
+function CheckUserName(req,res,next){
+  if(!req.body.name){
+    return res.status(400).json({ error: 'User name required. Bad request!' });
+  }else{
+    return next();
+  }
+};
+
+function CheckArray(req,res,next){
+  if(!users[req.params.index]){
+    return res.status(400).json({ error: 'Empty slot in array. Bad request!' });
+  }else{
+    return next();
+  }
+}
+
+server.use((req,res,next) => {
+    console.log(`Middleware Console.log-NEXT`);
+    console.log(`Método utilizado: ${req.method}, URL: ${req.url}`);
+    return next(); //Executando próximo middleware
+});
+
 const users = ['Daniel0', 'Cassiano1', 'Daniel2']; //INDEXs: [0,1,2]
 
 server.get('/users', (req,res) => { //Retorne todos usuários
     return res.json(users);
 });
 
-server.get('/users/:index', (req,res) => { //Retorne o slot do array index
+server.get('/users/:index', CheckArray, (req,res) => { //Retorne o slot do array index
     const { index } = req.params;
     return res.json(users[index]); 
 });
 
-server.post('/users', (req,res) => { //Pegue a variável "name", da requisição body (req.body)
+server.post('/users', CheckUserName, (req,res) => { //Pegue a variável "name", da requisição body (req.body)
     const { name } = req.body;
     users.push(name);
     return res.json(users);
 });
 
-server.put('/users/:index', (req,res) => {
+server.put('/users/:index', CheckUserName, CheckArray, (req,res) => { //Editar nome
     const { index } = req.params;
     const { name } = req.body;
 
