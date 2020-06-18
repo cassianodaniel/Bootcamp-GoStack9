@@ -41,9 +41,11 @@ function CheckUserName(req,res,next){
 };
 
 function CheckArray(req,res,next){
+  const user = users[req.params.index];
   if(!users[req.params.index]){
     return res.status(400).json({ error: 'Empty slot in array. Bad request!' });
   }else{
+    req.user = user;
     return next();
   }
 }
@@ -62,12 +64,13 @@ server.get('/users', (req,res) => { //Retorne todos usuários
 
 server.get('/users/:index', CheckArray, (req,res) => { //Retorne o slot do array index
     const { index } = req.params;
-    return res.json(users[index]); 
+    return res.json(req.user); 
 });
 
 server.post('/users', CheckUserName, (req,res) => { //Pegue a variável "name", da requisição body (req.body)
     const { name } = req.body;
     users.push(name);
+    
     return res.json(users);
 });
 
