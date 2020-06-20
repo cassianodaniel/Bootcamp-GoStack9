@@ -18,5 +18,8 @@ module.exports = {
 
 yarn sequelize migration:create --name=create-user //CRIAÇÃO DA MIGRATION 
 
-yarn sequelize db:migrate //UP DA MIGRATION
+yarn sequelize db:migrate //ARREMESSO DA MIGRATION PARA O BANCO DE DADOS
 
+yarn sequelize db:migrate:undo //DESFAZ A ÚLTIMA MIGRATION
+
+yarn sequelize db:migrate:undo:all //DESFAZ TODAS AS MIGRATIONS
