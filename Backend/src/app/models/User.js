@@ -11,6 +11,10 @@ class User extends Model {
         },
         {
             sequelize, //padrão 
-        });
+        }
+        );
+        return this;
     }
 }
+
+export default User;

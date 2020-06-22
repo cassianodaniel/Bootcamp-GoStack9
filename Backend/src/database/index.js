@@ -4,7 +4,7 @@ import User from '../app/models/User';
 
 import databaseConfig from '../config/database';
 
-const models = [User]; //ARRAY COM TODOS OS MODELS
+const models = [User]; //ARRAY COM O MODEL USER;
 
 class Database{
     constructor(){
@@ -12,8 +12,7 @@ class Database{
     }
     init(){
         this.connection = new Sequelize(databaseConfig);
-
-        models.map(model => model.init(this.connection)); //Inicie este módulo connection   
+        models.map(model => model.init(this.connection)) //Inicie este módulo connection   
     }
 }
 
