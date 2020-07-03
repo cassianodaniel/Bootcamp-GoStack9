@@ -21,6 +21,7 @@ const user = await User.create({
 */
 
 routes.post('/users', UserController.store);
+
 routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
